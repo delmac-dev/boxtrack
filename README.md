@@ -6,7 +6,7 @@ This is a simple web app to help track the boxes that are worked on over time.
 
 - [x] Create the main routes
 - [ ] Create MongoDB database and integrate it with the app
-- [ ] Add authentication with only one user in the database (ADMIN)
+- [x] Add authentication with only one user in the database (ADMIN)
 - [ ] Make components for the navbar
 - [ ] Finish the add button on the navbar
 - [ ] Design the datatable on the home page
