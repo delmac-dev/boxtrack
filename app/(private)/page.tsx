@@ -1,7 +1,11 @@
-import { getCollections } from "@/lib/actions";
+"use client";
 
-export default async function Home() {
-  const data = await getCollections();
+import { useGetCollections } from "@/lib/query-hooks";
+
+export default function Home() {
+  const { data: collections, isLoading, isError } = useGetCollections();
+
+  console.log({collections});
 
   return (
     <>

@@ -1,6 +1,7 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 import connectToDB from "./db";
+import { NavigationProps } from "./types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -16,3 +17,12 @@ export const dataProvider = async (callback: () => Promise<any>)=> {
 
   return await callback();
 }
+
+export const parseNavigation = (pathname: string, navigation: NavigationProps[], useStartWith:boolean = false) => {
+  const logic = (link: string ) => useStartWith? pathname.startsWith(link) : link === pathname;
+
+  return navigation.map(navigationItem => ({
+    ...navigationItem,
+    active: logic(navigationItem.link)
+  }));
+};

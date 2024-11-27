@@ -1,8 +1,23 @@
+"use client";
+
 import { HomeIcon } from "lucide-react";
 import { Exit } from "./exit";
-
+import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import { parseNavigation } from "@/lib/utils";
+import { NavigationProps } from "@/lib/types";
 
 export default function Header () {
+    const navLinks:NavigationProps[] = [
+        { name: "home",link: "", active: false, onLeft: true, onRight: false },
+    ];
+    const [content, setContent] = useState<NavigationProps[]>([]);
+    const pathname = usePathname();
+
+    useEffect(()=> {
+        setContent(parseNavigation(pathname, navLinks, true));
+    }, [pathname]);
+
     return (
         <header className="w-full h-14 border-b border-neutral-300 flex px-4">
             {/* LeftPanel */}
