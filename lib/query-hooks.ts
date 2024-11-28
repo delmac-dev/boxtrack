@@ -30,13 +30,9 @@ export function useAddCollection() {
 
     return useMutation({ 
         mutationFn: addCollection,
-        onSuccess: (data) => {
+        onSuccess: () => {
             queryClient.invalidateQueries({queryKey: keys.collections})
             queryClient.invalidateQueries({queryKey: keys.activeCollections})
-            // queryClient.setQueryData(keys.collections, data)
-
-            console.log({data});
-            
         }
     })
 }
@@ -46,12 +42,9 @@ export function useModifyCollection(){
 
     return useMutation({ 
         mutationFn: modifyCollection,
-        onSuccess: (data) => {
+        onSuccess: () => {
             queryClient.invalidateQueries({queryKey: keys.collections})
             queryClient.invalidateQueries({queryKey: keys.activeCollections})
-
-            console.log({data});
-            
         }
     })
 }
