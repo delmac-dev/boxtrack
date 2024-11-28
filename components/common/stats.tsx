@@ -1,8 +1,9 @@
+import { useGetStats } from "@/lib/query-hooks";
 import { TabsContent } from "@radix-ui/react-tabs";
-import { useEffect } from "react";
 
 
 export default function Stats() {
+    const { data: tabs, isLoading, isError } = useGetStats();
 
     return (
         <TabsContent value="stats" className="tab-content">

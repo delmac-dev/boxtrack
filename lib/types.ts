@@ -16,16 +16,17 @@ export type TabProps = {
 
 
 export interface Box {
+    _id?: ObjectId;
     label: string;
     modifiedAt: Date;
-    Content: number;
+    content: number;
   }
   
 export interface Collections {
-    _id: ObjectId;
+    _id?: ObjectId;
     label: string;
     startAt: Date;
-    endAt: string;
+    endAt?: Date;
     status: string;
     boxTotal?: number;
     boxDone?: number;
@@ -36,7 +37,7 @@ export interface Collections {
   }
 
   export interface Stats {
-    _id: ObjectId;
+    _id?: ObjectId;
     date: Date;
     collections: (ObjectId | Collections)[];
     boxDone?: number;

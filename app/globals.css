@@ -88,4 +88,12 @@ body {
   .tab-content {
     @apply bg-neutral-700 flex-1;
   }
+
+  .input-field {
+    @apply block h-14 w-60 p-4 text-xl font-semibold
+  }
+
+  .add-button {
+    @apply block w-44 h-14 rounded-md bg-neutral-500 text-neutral-50
+  }
 }

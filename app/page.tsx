@@ -15,6 +15,8 @@ import { useState } from "react";
 
 export default function BoxTrack() {
   const { data: tabs, isLoading, isError } = useGetActiveCollections();
+  console.log({tabs});
+  
   const [ open, setOpen ] = useState(false);
 
   return (
@@ -23,7 +25,7 @@ export default function BoxTrack() {
         {/* left panel */}
         <div className="relative isolate h-10 flex">
           <Tab value="home" onLeft icon={HomeIcon} />
-          {tabs && tabs.map(({ label }, index) => <Tab key={index} value={label} />)}
+          {/* {tabs && tabs.map(({ label }, index) => <Tab key={index} value={label} />)} */}
           <TabButton icon={Plus} fnx={() => setOpen(true)} />
         </div>
 
@@ -36,7 +38,7 @@ export default function BoxTrack() {
 
       {/* content */}
       <Home />
-      {tabs && tabs.map((data, index) => <Group key={index} { ...data } />)}
+      {/* {tabs && tabs.map((data, index) => <Group key={index} { ...data } />)} */}
       <Stats />
 
       {/* add group dialog */}
@@ -50,7 +52,7 @@ export default function BoxTrack() {
           <DialogContent className="fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg">
             <DialogTitle>Add A Group</DialogTitle>
             <DialogDescription>simply add a new group to the list of active groups</DialogDescription>
-            <AddForm onSubmit={() => setOpen(false)} />
+            <AddForm callback={() => setOpen(false)} />
           </DialogContent>
         </DialogPortal>
       </Dialog>

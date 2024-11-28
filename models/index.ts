@@ -11,7 +11,7 @@ const CollectionSchema = new Schema({
     boxes: [{
         label: String,
         modifiedAt: Date,
-        Content: Number
+        content: Number
     }]
 }, {timestamps: true});
 
