@@ -21,7 +21,7 @@ const handleStats = async () => {
 
 }
 
-export const addCollection = async ({collection}:{ collection: FormSchemaProp}): Promise<any> => connectionProvider(async () => {
+export const addCollection = async ({collection}:{ collection: FormSchemaProp}): Promise<Collections[]> => connectionProvider(async () => {
     const { letter, total } = collection;
     const newCollection:Collections = {
         label: letter,
@@ -31,11 +31,13 @@ export const addCollection = async ({collection}:{ collection: FormSchemaProp}):
         boxes: createBoxes(letter, total)
     }
 
-    await Collection.create(newCollection);
+    return await Collection.create(newCollection);
 });
 
-export const modifyCollection = async ({collection}:{collection: Collections}): Promise<any> => connectionProvider(async () => {
+export const modifyCollection = async ({collection}:{collection: Collections}): Promise<Collections[]> => connectionProvider(async () => {
     if(!collection._id) throw new Error("Record Dont Exit");
 
-    await Collection.findByIdAndUpdate(collection._id, collection);
+    const col = await Collection.findByIdAndUpdate(collection._id, collection);
+
+    return col || []
 });

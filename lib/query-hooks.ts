@@ -28,19 +28,30 @@ export function useGetStats() {
 export function useAddCollection() {
     const queryClient = useQueryClient();
 
-    const queryKey = [keys.collections, keys.activeCollections];
     return useMutation({ 
         mutationFn: addCollection,
-        onSuccess: () => queryClient.invalidateQueries({ queryKey: queryKey })
+        onSuccess: (data) => {
+            queryClient.invalidateQueries({queryKey: keys.collections})
+            queryClient.invalidateQueries({queryKey: keys.activeCollections})
+            // queryClient.setQueryData(keys.collections, data)
+
+            console.log({data});
+            
+        }
     })
 }
 
 export function useModifyCollection(){
     const queryClient = useQueryClient();
 
-    const queryKey = [keys.collections, keys.activeCollections];
     return useMutation({ 
         mutationFn: modifyCollection,
-        onSuccess: () => queryClient.invalidateQueries({ queryKey: queryKey })
+        onSuccess: (data) => {
+            queryClient.invalidateQueries({queryKey: keys.collections})
+            queryClient.invalidateQueries({queryKey: keys.activeCollections})
+
+            console.log({data});
+            
+        }
     })
 }
