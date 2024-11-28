@@ -8,8 +8,8 @@ export default function Home() {
   console.log({collections});
 
   return (
-    <>
-      The Home Page
-    </>
+    <div className="w-full flex-1 bg-neutral-700">
+      <div className="w-56 h-36"></div>
+    </div>
   );
 }

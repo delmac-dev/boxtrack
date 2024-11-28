@@ -18,11 +18,11 @@ export const dataProvider = async (callback: () => Promise<any>)=> {
   return await callback();
 }
 
-export const parseNavigation = (pathname: string, navigation: NavigationProps[], useStartWith:boolean = false) => {
-  const logic = (link: string ) => useStartWith? pathname.startsWith(link) : link === pathname;
+export const parseNavigation = (pathname: string, navigation: NavigationProps[]) => {
+  const logic = (link: string ) => link === pathname;
 
   return navigation.map(navigationItem => ({
     ...navigationItem,
-    active: logic(navigationItem.link)
+    active: logic(navigationItem.link || "")
   }));
 };

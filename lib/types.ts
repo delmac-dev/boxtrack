@@ -4,10 +4,13 @@ export type QueryProps = {
     searchParams: { [key: string]: string }
 }
 
+type LucideIconType = React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+
 export type NavigationProps = {
     name: string;
-    link: string;
-    active: boolean;
-    onLeft: boolean;
-    onRight: boolean;
+    icon?: LucideIconType,
+    link?: string;
+    active?: boolean;
+    onLeft?: boolean;
+    onRight?: boolean;
 };
