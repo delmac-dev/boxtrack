@@ -16,7 +16,9 @@ export function cn(...inputs: ClassValue[]) {
 export async function connectionProvider<T>(callback: () => Promise<T>): Promise<T> {
   await connectToDB();
 
-  return await callback();
+  const data = JSON.stringify(await callback());
+
+  return JSON.parse(data || "[]") as T
 }
 
 export function createBoxes(letter: string, total: number): Box[] {

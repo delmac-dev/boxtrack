@@ -6,16 +6,11 @@ import { Collections, Stats } from "./types";
 import { FormSchemaProp } from "@/components/common/add-form";
 
 export const getCollections = async (): Promise<Collections[]> =>  connectionProvider(async () => {
-    const collections: Collections[] = await Collection.find();
-
-    return collections;
+    return await Collection.find();
 });
 
 export const getActiveCollections = async (): Promise<Collections[]> => connectionProvider(async () => {
-    const collection = await Collection.find({ status: "active" }).lean();
-    console.log({collection: JSON.stringify(collection)})
-
-    return [];
+    return await Collection.find({ status: "active" });
 });
 
 export const getStats = async (): Promise<Stats[]> => connectionProvider(async () => {

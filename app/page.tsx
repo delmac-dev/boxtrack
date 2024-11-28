@@ -15,7 +15,6 @@ import { useState } from "react";
 
 export default function BoxTrack() {
   const { data: tabs, isLoading, isError } = useGetActiveCollections();
-  console.log({tabs});
   
   const [ open, setOpen ] = useState(false);
 
@@ -25,7 +24,7 @@ export default function BoxTrack() {
         {/* left panel */}
         <div className="relative isolate h-10 flex">
           <Tab value="home" onLeft icon={HomeIcon} />
-          {/* {tabs && tabs.map(({ label }, index) => <Tab key={index} value={label} />)} */}
+          {tabs && tabs.map(({ label }, index) => <Tab key={index} value={label} />)}
           <TabButton icon={Plus} fnx={() => setOpen(true)} />
         </div>
 
@@ -38,7 +37,7 @@ export default function BoxTrack() {
 
       {/* content */}
       <Home />
-      {/* {tabs && tabs.map((data, index) => <Group key={index} { ...data } />)} */}
+      {tabs && tabs.map((data, index) => <Group key={index} { ...data } />)}
       <Stats />
 
       {/* add group dialog */}
