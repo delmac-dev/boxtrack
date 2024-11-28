@@ -1,16 +1,46 @@
+import { ObjectId } from "mongoose";
 
 export type QueryProps = {
     params: {[key: string]: string}
     searchParams: { [key: string]: string }
 }
 
-type LucideIconType = React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+export type LucideIconType = React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
 
-export type NavigationProps = {
-    name: string;
+export type TabProps = {
+    value: string;
     icon?: LucideIconType,
-    link?: string;
-    active?: boolean;
     onLeft?: boolean;
     onRight?: boolean;
 };
+
+
+export interface Box {
+    label: string;
+    modifiedAt: Date;
+    Content: number;
+  }
+  
+export interface Collections {
+    _id: ObjectId;
+    label: string;
+    startAt: Date;
+    endAt: string;
+    status: string;
+    boxTotal?: number;
+    boxDone?: number;
+    boxLeft?: number;
+    boxes: Box[];
+    createdAt?: Date;
+    updatedAt?: Date;
+  }
+
+  export interface Stats {
+    _id: ObjectId;
+    date: Date;
+    collections: (ObjectId | Collections)[];
+    boxDone?: number;
+    boxLeft?: number;
+    createdAt?: Date;
+    updatedAt?: Date;
+  }

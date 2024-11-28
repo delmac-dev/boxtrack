@@ -3,7 +3,7 @@ import { Schema, model, models } from "mongoose";
 const CollectionSchema = new Schema({
     label: String,
     startAt: Date,
-    endAt: String,
+    endAt: Date,
     status: String,
     boxTotal: { type: Number, default: 0 },
     boxDone: { type: Number, default: 0 },
