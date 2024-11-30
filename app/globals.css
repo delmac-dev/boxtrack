@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -86,7 +92,7 @@ body {
   }
 
   .tab-content {
-    @apply bg-neutral-700 flex-1;
+    @apply bg-neutral-700 flex-grow-0 data-[state=active]:flex-grow data-[state=active]:flex-1 flex;
   }
 
   .input-field {
@@ -95,5 +101,13 @@ body {
 
   .add-button {
     @apply block w-44 h-14 rounded-md bg-neutral-500 text-neutral-50
+  }
+
+  .hover-card > input:checked ~ label {
+    color: blue;
+  }
+
+  .hover-card > input:not(:checked) ~ label:hover, .hover-card > input:not(:checked) ~ label:hover ~ label {
+    color: rgb(233, 178, 0);
   }
 }

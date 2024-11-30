@@ -16,10 +16,10 @@ export type TabProps = {
 
 
 export interface Box {
-    _id?: ObjectId;
+    _id: string;
     label: string;
-    modifiedAt: Date;
-    content: number;
+    modifiedAt: string;
+    content: 1 | 2 | 3 | 4 | 5;
   }
   
 export interface Collections {
