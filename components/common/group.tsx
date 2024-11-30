@@ -25,45 +25,34 @@ export const BoxesFormSchema = z.object({
 export type BoxesFormValues = z.infer<typeof BoxesFormSchema>;
 
 type Props = {
-    boxes: BoxesFormValues["boxes"];
-    onSubmit: (data: BoxesFormValues) => any;
+  boxes: BoxesFormValues["boxes"];
 };
 
 export default function Group(props: Collections) {
-    const { label, boxes } = props;
-    const { mutate: modifyCollection, isError, isSuccess, isPending } = useModifyCollection();
+  const { label, boxes } = props;
+  const { mutate: modifyCollection, isError, isSuccess, isPending } = useModifyCollection();
 
-    const handleSubmit = (data: BoxesFormValues) => {
-      modifyCollection({collection: { ...props, boxes: data.boxes}})
-    };
-
-    useEffect(() => {
-      if (isSuccess) {
-          toast.success("Collection updated successfully");
-      }
-  }, [isSuccess]);
-
-    return (
-        <TabsContent  value={label} className="tab-content">
-          <div className="w-full flex-1 bg-green-600 p-5 flex gap-7">
-            <BoxForm boxes={boxes} onSubmit={handleSubmit} />
-            <div className="w-72 h-full bg-green-700">left panel</div>
-          </div>
-        </TabsContent>
-    )
+  return (
+      <TabsContent  value={label} className="tab-content">
+        <div className="w-full flex-1 bg-green-600 p-5 flex gap-7">
+          <BoxForm boxes={boxes} />
+          <div className="w-72 h-full bg-green-700">left panel</div>
+        </div>
+      </TabsContent>
+  )
 }
 
 
-function BoxForm({ boxes, onSubmit }: Props) {
+function BoxForm({ boxes }: Props) {
     const methods = useForm<BoxesFormValues>({
       defaultValues: { boxes },
       resolver: zodResolver(BoxesFormSchema),
     });
     
     const { getValues, formState: { isDirty } } = methods;
-    const debouncedSubmit = debounce(() => onSubmit(getValues()), 300);
+    // const debouncedSubmit = debounce(() => onSubmit(getValues()), 300);
 
-    if(isDirty) debouncedSubmit();
+    // if(isDirty) debouncedSubmit();
   
     return (
         <FormProvider {...methods}>
