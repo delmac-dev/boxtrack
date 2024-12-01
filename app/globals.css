@@ -20,13 +20,11 @@ body {
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
-
-    --primary: 9999;
-    --secondary: 9999;
-    --tertiary: 9999;
-    --glassy: 9999
+    --primary: 270 100% 98%;
+    --secondary: 270 100% 98%;
+    --tertiary: 263.4 69.3% 42.2%;
+    --text-dark: 0 0% 3.9%;
+    --text-white: 0 0% 98%;
   }
 }
 
