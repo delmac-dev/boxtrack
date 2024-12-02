@@ -26,9 +26,8 @@ export function createBoxes(letter: string, total: number): Box[] {
 
   for (let i = 1; i <= total; i++) {
     boxes.push({
-      label: `${letter}${i}`,
-      modifiedAt: new Date(),
-      content: 0
+      digit: i,
+      status: false
     });
   }
 

@@ -16,7 +16,7 @@ export type TabProps = {
 
 
 export interface Box {
-    _id: string;
+    _id?: string;
     digit: number;
     status: boolean;
   }
