@@ -6,7 +6,7 @@ import { toast } from "sonner";
 import { z } from "zod";
 
 const FormSchema = z.object({
-    letter: z.string().min(1)
+    letter: z.string().toUpperCase().min(1)
 });
 
 export type FormSchemaProp = z.infer<typeof FormSchema>;
@@ -29,17 +29,23 @@ export default function AddForm(props:{callback: ()=>void}) {
     };
 
     useEffect(() => {
+        let toastId: string | number | undefined;
+
+        if (isPending) {
+            toastId = toast.loading("Adding Collection...");
+        }
+
         if (isSuccess) {
-            toast.success("Collection added successfully");
+            toast.success("Collection added successfully", {id: toastId});
             callback();
         }
     }, [isSuccess]);
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-            <input {...register("letter")} placeholder="box letter" className="block input-field" />
-            <button disabled={!isDirty || isSubmitting } className="button">
-                { isSubmitting || isPending ? "Adding" : "Add" }
+            <input {...register("letter")} placeholder="box letter" className="block input-field uppercase" />
+            <button disabled={!isDirty || isSubmitting } className="button disabled:cursor-not-allowed">
+                Add
             </button>
         </form>
     )

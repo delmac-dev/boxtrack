@@ -52,8 +52,8 @@ export default function BoxTrack() {
             <Dialog.Title className="text-6xl font-extrabold text-tertiary mb-10">
               NEW GROUP
             </Dialog.Title>
-            <div className="bg-primary/40 size-24 flex-center rounded-tl-full rounded-tr-full rounded-bl-full border-primary border-4 rotate-45 mb-10">
-              <Carton className="-rotate-45 size-12"/>
+            <div className="bg-primary/40 size-24 flex-center rounded-tl-full rounded-tr-full rounded-bl-full border-primary border-4 rotate-45 mb-10 shadow-inner">
+              <Carton className="-rotate-45 size-14"/>
             </div>
             <AddForm callback={() => setOpen(false)} />
           </Dialog.Content>
