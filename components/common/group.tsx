@@ -22,7 +22,7 @@ export const BoxesFormSchema = z.object({
 export type BoxesFormValues = z.infer<typeof BoxesFormSchema>;
 
 export default function Group(props: Collections) {
-  const { label, boxes } = props;
+  const { label, boxes, boxDone, boxLeft, boxTotal, startAt, endAt, status } = props;
   
   const toastIdRef = useRef<string | number | undefined>();
   const { mutate: modifyCollection, isError, isSuccess, isPending } = useModifyCollection();
@@ -61,7 +61,11 @@ export default function Group(props: Collections) {
 
   return (
       <TabsContent  value={label} className="tab-content">
-        <div className="w-full flex-1 bg-secondary p-5">
+        <div className="w-full flex-1 bg-secondary p-5 flex flex-col justify-between space-y-6">
+          <div className="mx-auto w-full max-w-screen-xl flex-1 flex items-center justify-between">
+            <h1 className="text-3xl capitalize font-extrabold text-tertiary">Group {label}</h1>
+
+          </div>
           <FormProvider {...methods}>
             <form className="mx-auto grid auto-cols-[70px] grid-rows-[repeat(6,_70px)] grid-flow-col gap-4 place-content-center">
               {boxes.map((box, index) => (
@@ -69,6 +73,9 @@ export default function Group(props: Collections) {
               ))}
             </form>
           </FormProvider>
+          <div className="w-full flex-1">
+            stats like boxTotal, boxLeft, date, date started
+          </div>
         </div>
       </TabsContent>
   )
