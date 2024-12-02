@@ -13,11 +13,9 @@ const config: Config = {
   			primary: 'hsl(var(--primary))',
   			secondary: 'hsl(var(--secondary))',
   			tertiary: 'hsl(var(--tertiary))',
-  			text: {
-  				dark: 'hsl(var(--text-dark))',
-  				white: 'hsl(var(--text-white))'
-  			}
-  		},
+			dark: 'hsl(var(--text-dark))',
+			light: 'hsl(var(--text-light))'
+  		}
   	}
   },
   plugins: [require("tailwindcss-animate")],

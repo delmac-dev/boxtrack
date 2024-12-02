@@ -21,20 +21,16 @@ body {
 @layer base {
   :root {
     --primary: 270 100% 98%;
-    --secondary: 270 100% 98%;
-    --tertiary: 263.4 69.3% 42.2%;
-    --text-dark: 0 0% 3.9%;
-    --text-white: 0 0% 98%;
+    --secondary: 252.5 94.7% 85.1%;
+    --tertiary: 263.4 70% 50.4%;
+    --dark: 0 0% 3.9%;
+    --light: 0 0% 100%;
   }
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
-
   body {
-    @apply bg-background text-foreground;
+    @apply bg-primary text-dark;
   }
 
   .flex-center {
@@ -42,7 +38,7 @@ body {
   }
 
   .tab-item {
-    @apply w-full h-full flex-center text-sm font-semibold px-3 py-1 rounded-lg text-primary hover:bg-neutral-700 hover:text-primary-foreground;
+    @apply w-full h-full flex-center text-sm font-semibold px-3 py-1 rounded-lg text-primary hover:bg-neutral-700 hover:text-black;
   }
 
   .tab-content {
