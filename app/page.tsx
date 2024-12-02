@@ -19,7 +19,7 @@ export default function BoxTrack() {
 
   return (
     <Tabs defaultValue="home" className="w-full min-h-screen flex flex-col">
-      <TabsList className="w-full h-12 flex px-2 justify-between bg-white items-end">
+      <TabsList className="w-full h-12 flex px-2 justify-between bg-primary items-end">
         {/* left panel */}
         <div className="relative isolate h-10 flex">
           <Tab value="home" onLeft icon={HomeIcon} />
