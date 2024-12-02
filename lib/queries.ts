@@ -22,13 +22,13 @@ const handleStats = async () => {
 }
 
 export const addCollection = async ({collection}:{ collection: FormSchemaProp}): Promise<Collections[]> => connectionProvider(async () => {
-    const { letter, total } = collection;
+    const { letter } = collection;
     const newCollection:Collections = {
         label: letter,
-        boxTotal: total,
+        boxTotal: 100,
         startAt: new Date(),
         status: "active",
-        boxes: createBoxes(letter, total)
+        boxes: createBoxes(letter, 100)
     }
 
     return await Collection.create(newCollection);

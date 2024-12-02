@@ -17,9 +17,8 @@ export type TabProps = {
 
 export interface Box {
     _id: string;
-    label: string;
-    modifiedAt: string;
-    content: 1 | 2 | 3 | 4 | 5;
+    digit: number;
+    status: boolean;
   }
   
 export interface Collections {

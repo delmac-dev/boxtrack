@@ -11,10 +11,9 @@ import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
 const BoxSchema = z.object({
-  label: z.string(),
-  modifiedAt: z.string().datetime(),
   _id: z.string(),
-  content: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)]),
+  digit: z.number(),
+  status: z.boolean()
 });
 
 export const BoxesFormSchema = z.object({
@@ -38,7 +37,7 @@ export default function Group(props: Collections) {
           <FormProvider {...methods}>
             <form className="mx-auto grid auto-cols-[70px] grid-rows-[repeat(6,_70px)] grid-flow-col gap-4 place-content-center">
               {boxes.map((box, index) => (
-                <BoxField key={box._id} index={index} />
+                <BoxField key={box._id} index={index} label={label} />
               ))}
             </form>
           </FormProvider>
@@ -47,9 +46,10 @@ export default function Group(props: Collections) {
   )
 }
 
-function BoxField({ index }: { index: number }) {
+function BoxField({ index, label }: { index: number, label: string }) {
     const { register, getValues } = useFormContext<BoxesFormValues>();
     const boxes = getValues("boxes");
+    const box = boxes[index];
 
     // const { getValues, formState: { isDirty } } = methods;
     // const debouncedSubmit = debounce(() => onSubmit(getValues()), 300);
@@ -57,20 +57,11 @@ function BoxField({ index }: { index: number }) {
     // if(isDirty) debouncedSubmit();
   
     return (
-      <HoverCard>
-        <HoverCardTrigger asChild className="w-full h-full flex-center font-bold text-sm text-tertiary bg-primary rounded-md cursor-pointer border-4 border-light shadow-inner">
-          <label htmlFor={`boxes.${index}.content-5`} className={cn(boxes[index].content === 5 && "!bg-blue-500 !text-blue-50")}>
-            {boxes[index].label}
-          </label>
-        </HoverCardTrigger>
-        <HoverCardContent side="right" className="hover-content flex flex-col-reverse space-y-2 w-auto p-2 hover-card">
-          {Array.from({ length: 5 }, (_, i) => 5 - i).map((value) => (
-            <React.Fragment key={value}>
-              <input type="radio" value={value} {...register(`boxes.${index}.content`)} id={`boxes.${index}.content-${value}`} hidden />
-              <label htmlFor={`boxes.${index}.content-${value}`} key={value} className="inline-flex items-center space-x-2 px-4 py-0.5 cursor-pointer">{value}</label>
-            </React.Fragment>
-          ))}
-        </HoverCardContent>
-      </HoverCard>
+      <div className="">
+        <label htmlFor={`boxes.${index}.content-5`} className={cn(" box-field", box.status && "!bg-blue-500 !text-blue-50")}>
+          <span>{label}</span>
+          <span>{box.digit}</span>
+        </label>
+      </div>
     );
 }

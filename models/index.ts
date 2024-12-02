@@ -9,7 +9,7 @@ const CollectionSchema = new Schema({
     boxDone: { type: Number, default: 0 },
     boxLeft: { type: Number, default: 0 },
     boxes: [{
-        digit: String,
+        digit: Number,
         status: Boolean
     }]
 }, {timestamps: true});
