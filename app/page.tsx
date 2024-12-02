@@ -12,7 +12,8 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { Tabs, TabsList } from "@radix-ui/react-tabs";
 import { HomeIcon, LogOut, Plus, X } from "lucide-react";
 import { signOut } from "next-auth/react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
 
 export default function BoxTrack() {
   const { data: tabs, isLoading, isError } = useGetActiveCollections();

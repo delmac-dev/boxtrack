@@ -2,11 +2,10 @@ import { useModifyCollection } from "@/lib/query-hooks";
 import { Collections } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TabsContent } from "@radix-ui/react-tabs";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
 import { z } from "zod";
 import debounce from "lodash.debounce";
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "@radix-ui/react-hover-card";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
@@ -24,12 +23,41 @@ export type BoxesFormValues = z.infer<typeof BoxesFormSchema>;
 
 export default function Group(props: Collections) {
   const { label, boxes } = props;
+  
+  const toastIdRef = useRef<string | number | undefined>();
   const { mutate: modifyCollection, isError, isSuccess, isPending } = useModifyCollection();
 
   const methods = useForm<BoxesFormValues>({
-    defaultValues: { boxes },
+    defaultValues: { boxes: boxes || [] },
     resolver: zodResolver(BoxesFormSchema),
   });
+
+  const onSubmit = (data:BoxesFormValues["boxes"]): any => {
+    modifyCollection({collection: {...props, boxes: data}});
+  }
+
+  const { getValues, reset, formState: { isDirty, isSubmitting } } = methods;
+  const debouncedSubmit = debounce(() => onSubmit(getValues("boxes")), 3000);
+
+  useEffect(() => {
+    if (isDirty) debouncedSubmit();
+  }, [isDirty]);
+
+  useEffect(() => {
+    if (isPending) { 
+      toastIdRef.current = toast.loading("Updating Collection...");
+    }
+
+    if (isSuccess) {
+      if (toastIdRef.current) toast.dismiss(toastIdRef.current);
+      toast.success("Collection Updated Successfully");
+      toastIdRef.current = undefined; 
+    }
+  }, [isSuccess, isPending]);
+
+  useEffect(()=> {
+    reset({ boxes: boxes || [] });
+  }, [boxes]);
 
   return (
       <TabsContent  value={label} className="tab-content">
@@ -37,7 +65,7 @@ export default function Group(props: Collections) {
           <FormProvider {...methods}>
             <form className="mx-auto grid auto-cols-[70px] grid-rows-[repeat(6,_70px)] grid-flow-col gap-4 place-content-center">
               {boxes.map((box, index) => (
-                <BoxField key={box._id} index={index} label={label} />
+                <BoxField key={box._id} index={index} label={label} disabled={isPending || isSubmitting} />
               ))}
             </form>
           </FormProvider>
@@ -46,22 +74,15 @@ export default function Group(props: Collections) {
   )
 }
 
-function BoxField({ index, label }: { index: number, label: string }) {
-    const { register, getValues } = useFormContext<BoxesFormValues>();
-    const boxes = getValues("boxes");
-    const box = boxes[index];
-
-    // const { getValues, formState: { isDirty } } = methods;
-    // const debouncedSubmit = debounce(() => onSubmit(getValues()), 300);
-
-    // if(isDirty) debouncedSubmit();
+function BoxField({ index, label, disabled }: { index: number, label: string, disabled?: boolean }) {
+    const { register,  getValues} = useFormContext<BoxesFormValues>();
+    const box = getValues(`boxes.${index}`);
   
     return (
-      <div className="">
-        <label htmlFor={`boxes.${index}.content-5`} className={cn("box-field", box.status && "")}>
-          <span className="absolute z-0 text-5xl text-tertiary/10">{label}</span>
-          <span className="text-xl text-tertiary">{box.digit}</span>
-        </label>
-      </div>
+      <label htmlFor={`boxes.${index}.status`} className={"group box-field has-[:checked]:box-field-gradient"}>
+        <span className="absolute z-0 text-5xl text-tertiary/10 group-has-[:checked]:text-light/20">{label}</span>
+        <span className="text-xl text-tertiary group-has-[:checked]:text-light">{box.digit}</span>
+        <input type="checkbox" {...register(`boxes.${index}.status`)} id={`boxes.${index}.status`} disabled={disabled} hidden />
+      </label>
     );
 }

@@ -38,6 +38,7 @@ export const modifyCollection = async ({collection}:{collection: Collections}): 
     if(!collection._id) throw new Error("Record Dont Exit");
 
     const col = await Collection.findByIdAndUpdate(collection._id, collection);
+    const colArray = [col] as Collections[]
 
-    return col || []
+    return colArray;
 });
