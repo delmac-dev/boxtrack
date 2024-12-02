@@ -9,9 +9,8 @@ const CollectionSchema = new Schema({
     boxDone: { type: Number, default: 0 },
     boxLeft: { type: Number, default: 0 },
     boxes: [{
-        label: String,
-        modifiedAt: Date,
-        content: { type: Number, default: 0 }
+        digit: String,
+        status: Boolean
     }]
 }, {timestamps: true});
 
