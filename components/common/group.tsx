@@ -6,12 +6,9 @@ import React, { useEffect, useRef } from "react";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
 import { z } from "zod";
 import debounce from "lodash.debounce";
-import { cn } from "@/lib/utils";
+import { formatDate } from "@/lib/utils";
 import { toast } from "sonner";
-import { Bath, Bomb, LucideIcon } from "lucide-react";
-import CartonTotal from "../icons/carton-total";
-import CartonDone from "../icons/carton-done";
-import CartonLeft from "../icons/carton-left";
+import { CheckCircle2, CircleX, LucideIcon, Package, PackageCheck, PackageX, Printer } from "lucide-react";
 
 const BoxSchema = z.object({
   _id: z.string(),
@@ -30,6 +27,7 @@ export default function Group(props: Collections) {
   
   const toastIdRef = useRef<string | number | undefined>();
   const { mutate: modifyCollection, isError, isSuccess, isPending } = useModifyCollection();
+  const startAtFormatted = formatDate(startAt);
 
   const methods = useForm<BoxesFormValues>({
     defaultValues: { boxes: boxes || [] },
@@ -69,9 +67,9 @@ export default function Group(props: Collections) {
           <div className="mx-auto w-full max-w-screen-xl flex-1 flex items-center justify-between">
             <h1 className="text-3xl capitalize font-extrabold text-dark/60">Group {label}</h1>
             <div className="flex space-x-8">
-              <Info icon={CartonTotal} digit={100} />
-              <Info icon={CartonDone} digit={20} />
-              <Info icon={CartonLeft} digit={80} />
+              <CollectionInfo icon={Package} digit={100} />
+              <CollectionInfo icon={PackageCheck} digit={20} />
+              <CollectionInfo icon={PackageX} digit={80} />
             </div>
           </div>
           <FormProvider {...methods}>
@@ -82,11 +80,20 @@ export default function Group(props: Collections) {
             </form>
           </FormProvider>
           <div className="mx-auto w-full max-w-screen-xl flex-1 flex items-center justify-between">
-            <div className="">
-              date started
-            </div>
-            <div className="">
-              print, done, delete
+            <h2 className="text-lg font-semibold text-dark/60"> {startAtFormatted} </h2>
+            <div className="flex space-x-8">
+              <button className="action-button">
+                <Printer className="size-6" />
+                Print
+              </button>
+              <button className="action-button">
+                <CheckCircle2 className="size-6" />
+                Done
+              </button>
+              <button className="action-button">
+                <CircleX className="size-6" />
+                Delete
+              </button>
             </div>
           </div>
         </div>
@@ -106,11 +113,11 @@ function BoxField({ index, label, disabled }: { index: number, label: string, di
     );
 }
 
-function Info(props: { icon: JSX.ElementType, digit: number}) {
+function CollectionInfo(props: { icon: LucideIcon, digit: number}) {
   return (
-    <div className="flex space-x-4 items-center p-1 px-4 bg-primary rounded-full border-light shadow-inner border-4">
-      <props.icon className="size-8" />
-      <div className="text-lg text-dark/60 font-bold">{props.digit}</div>
+    <div className="flex space-x-4 items-center p-1 px-4 bg-primary rounded-full cursor-default">
+      <props.icon className="size-6 text-dark/60" />
+      <div className="text-lg text-dark/60 font-semibold">{props.digit}</div>
     </div>
   )
 }

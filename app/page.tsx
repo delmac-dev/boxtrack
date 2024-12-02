@@ -9,10 +9,10 @@ import TabButton from "@/components/common/tab-button";
 import Carton from "@/components/icons/carton";
 import { useGetActiveCollections } from "@/lib/query-hooks";
 import * as Dialog from "@radix-ui/react-dialog";
-import { Tabs, TabsList } from "@radix-ui/react-tabs";
+import * as Tabby from "@radix-ui/react-tabs";
 import { HomeIcon, LogOut, Plus, X } from "lucide-react";
 import { signOut } from "next-auth/react";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 
 export default function BoxTrack() {
@@ -20,8 +20,8 @@ export default function BoxTrack() {
   const [ open, setOpen ] = useState(false);
 
   return (
-    <Tabs defaultValue="home" className="w-full min-h-screen flex flex-col">
-      <TabsList className="w-full h-12 flex px-2 justify-between bg-primary items-end">
+    <Tabby.Tabs defaultValue="home" className="w-full min-h-screen flex flex-col">
+      <Tabby.List className="w-full h-12 flex px-2 justify-between bg-primary items-end focus:outline-none">
         {/* left panel */}
         <div className="relative isolate h-10 flex">
           <Tab value="home" onLeft icon={HomeIcon} />
@@ -34,7 +34,7 @@ export default function BoxTrack() {
           <TabButton icon={LogOut} fnx={() => signOut({redirectTo: "/login"})} />
           <Tab value="stats" onRight />
         </div>
-      </TabsList>
+      </Tabby.List>
 
       {/* content */}
       <Home />
@@ -60,6 +60,6 @@ export default function BoxTrack() {
           </Dialog.Content>
         </Dialog.Portal>
       </Dialog.Root>
-    </Tabs>
+    </Tabby.Tabs>
   );
 }

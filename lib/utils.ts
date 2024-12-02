@@ -2,6 +2,8 @@ import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 import connectToDB from "./db";
 import { Box } from "./types";
+import { format } from 'date-fns';
+import { format as formatOrdinal } from 'date-fns-tz';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -32,4 +34,10 @@ export function createBoxes(letter: string, total: number): Box[] {
   }
 
   return boxes;
+}
+
+export function formatDate(date: Date): string {
+  const dayWithOrdinal = formatOrdinal(date, 'do'); // Adds the ordinal suffix
+  const formattedDate = format(date, `EEEE, '${dayWithOrdinal}' MMMM yyyy`);
+  return formattedDate;
 }

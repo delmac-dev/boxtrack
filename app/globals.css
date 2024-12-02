@@ -64,4 +64,8 @@ body {
   .button {
     @apply w-56 h-12 bg-tertiary/90 hover:bg-tertiary text-light text-lg font-extrabold rounded-md
   }
+
+  .action-button {
+    @apply w-32 h-10 px-4 rounded-full bg-tertiary/90 hover:bg-tertiary text-lg text-light font-medium flex justify-start items-center gap-4
+  }
 }
