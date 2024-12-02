@@ -50,7 +50,7 @@ body {
   }
 
   .box-field {
-    @apply w-full h-full flex-center font-bold text-sm text-tertiary bg-primary rounded-md cursor-pointer border-4 border-light shadow-inner flex-col gap-2
+    @apply relative isolate overflow-hidden w-full h-full flex-center font-extrabold bg-primary rounded-md cursor-pointer border-4 border-light shadow-inner flex-col
   }
 
   .dialog-content {

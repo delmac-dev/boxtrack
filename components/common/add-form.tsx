@@ -31,19 +31,20 @@ export default function AddForm(props:{callback: ()=>void}) {
     useEffect(() => {
         let toastId: string | number | undefined;
 
-        if (isPending) {
+        if (isPending && !isSuccess) {
             toastId = toast.loading("Adding Collection...");
         }
 
         if (isSuccess) {
-            toast.success("Collection added successfully", {id: toastId});
+            toast.dismiss(toastId);
+            toast.success("Collection added successfully");
             callback();
         }
-    }, [isSuccess]);
+    }, [isSuccess, isPending]);
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-            <input {...register("letter")} placeholder="box letter" className="block input-field uppercase" />
+            <input {...register("letter")} placeholder="box letter" className="block input-field uppercase" autoComplete="off" />
             <button disabled={!isDirty || isSubmitting } className="button disabled:cursor-not-allowed">
                 Add
             </button>

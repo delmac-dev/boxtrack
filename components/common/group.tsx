@@ -58,9 +58,9 @@ function BoxField({ index, label }: { index: number, label: string }) {
   
     return (
       <div className="">
-        <label htmlFor={`boxes.${index}.content-5`} className={cn(" box-field", box.status && "!bg-blue-500 !text-blue-50")}>
-          <span>{label}</span>
-          <span>{box.digit}</span>
+        <label htmlFor={`boxes.${index}.content-5`} className={cn("box-field", box.status && "")}>
+          <span className="absolute z-0 text-5xl text-tertiary/10">{label}</span>
+          <span className="text-xl text-tertiary">{box.digit}</span>
         </label>
       </div>
     );

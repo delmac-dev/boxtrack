@@ -3,7 +3,6 @@ import { TabsContent } from "@radix-ui/react-tabs";
 
 export default function Home() {
     const { data: collections, isLoading, isError } = useGetCollections();
-    console.log({collections});
 
     return (
         <TabsContent value="home" className="tab-content">
