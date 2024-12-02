@@ -13,8 +13,8 @@ const config: Config = {
   			primary: 'hsl(var(--primary))',
   			secondary: 'hsl(var(--secondary))',
   			tertiary: 'hsl(var(--tertiary))',
-			dark: 'hsl(var(--text-dark))',
-			light: 'hsl(var(--text-light))'
+        dark: 'hsl(var(--dark))',
+        light: 'hsl(var(--light))'
   		}
   	}
   },

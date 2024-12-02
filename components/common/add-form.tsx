@@ -20,7 +20,7 @@ export default function AddForm(props:{callback: ()=>void}) {
         resolver: zodResolver(FormSchema),
         defaultValues: {
             letter: "",
-            total: 100
+            total: 0
         }
     });
 
@@ -38,14 +38,12 @@ export default function AddForm(props:{callback: ()=>void}) {
     }, [isSuccess]);
 
     return (
-        <div className="">
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <input {...register("letter")} placeholder="box letter" className="input-field" />
-                <input {...register("total")} placeholder="box total" className="input-field" />
-                <button disabled={!isDirty || isSubmitting } className="add-button">
-                    { isSubmitting || isPending ? "Adding" : "Add" }
-                </button>
-            </form>
-        </div>
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+            <input {...register("letter")} placeholder="box letter" className="block input-field" />
+            <input {...register("total")} placeholder="box total" className="block input-field" />
+            <button disabled={!isDirty || isSubmitting } className="button">
+                { isSubmitting || isPending ? "Adding" : "Add" }
+            </button>
+        </form>
     )
 }

@@ -34,7 +34,7 @@ export default function Group(props: Collections) {
 
   return (
       <TabsContent  value={label} className="tab-content">
-        <div className="w-full flex-1 bg-green-600 p-5 flex gap-7">
+        <div className="w-full flex-1 bg-secondary p-5 flex gap-7">
           <BoxForm boxes={boxes} />
           <div className="w-72 h-full bg-green-700">left panel</div>
         </div>
