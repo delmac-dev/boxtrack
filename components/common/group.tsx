@@ -75,13 +75,12 @@ export default function Group(props: Collections) {
 }
 
 function BoxField({ index, label, disabled }: { index: number, label: string, disabled?: boolean }) {
-    const { register,  getValues} = useFormContext<BoxesFormValues>();
-    const box = getValues(`boxes.${index}`);
+    const { register} = useFormContext<BoxesFormValues>();
   
     return (
       <label htmlFor={`boxes.${index}.status`} className={"group box-field has-[:checked]:box-field-gradient"}>
         <span className="absolute z-0 text-5xl text-tertiary/10 group-has-[:checked]:text-light/20">{label}</span>
-        <span className="text-xl text-tertiary group-has-[:checked]:text-light">{box.digit}</span>
+        <span className="text-xl text-tertiary group-has-[:checked]:text-light">{index+1}</span>
         <input type="checkbox" {...register(`boxes.${index}.status`)} id={`boxes.${index}.status`} disabled={disabled} hidden />
       </label>
     );
