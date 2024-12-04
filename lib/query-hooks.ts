@@ -2,7 +2,7 @@
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { keys } from "./query-keys";
-import { addCollection, getActiveCollections, getCollections, getStats, modifyCollection } from "./queries";
+import { addCollection, getActiveCollections, getCollections, getStats, modifyCollection, removeCollection } from "./queries";
 
 export function useGetCollections() {
     const queryKey = keys.collections;
@@ -42,6 +42,18 @@ export function useModifyCollection(){
 
     return useMutation({ 
         mutationFn: modifyCollection,
+        onSuccess: () => {
+            queryClient.invalidateQueries({queryKey: keys.collections})
+            queryClient.invalidateQueries({queryKey: keys.activeCollections})
+        }
+    })
+}
+
+export function useRemoveCollection(){
+    const queryClient = useQueryClient();
+
+    return useMutation({ 
+        mutationFn: removeCollection,
         onSuccess: () => {
             queryClient.invalidateQueries({queryKey: keys.collections})
             queryClient.invalidateQueries({queryKey: keys.activeCollections})

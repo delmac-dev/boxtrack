@@ -42,3 +42,10 @@ export const modifyCollection = async ({collection}:{collection: Collections}): 
 
     return colArray;
 });
+
+export const removeCollection = async ({id}:{id: string}): Promise<string[]> => connectionProvider(async () => {
+
+    await Collection.findByIdAndDelete(id);
+
+    return ["success"];
+});

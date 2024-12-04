@@ -22,7 +22,7 @@ export interface Box {
   }
   
 export interface Collections {
-    _id?: ObjectId;
+    _id?: string;
     label: string;
     startAt: Date;
     endAt?: Date;
@@ -36,7 +36,7 @@ export interface Collections {
   }
 
   export interface Stats {
-    _id?: ObjectId;
+    _id?: string;
     date: Date;
     collections: (ObjectId | Collections)[];
     boxDone?: number;

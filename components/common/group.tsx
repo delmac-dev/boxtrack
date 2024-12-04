@@ -1,4 +1,4 @@
-import { useModifyCollection } from "@/lib/query-hooks";
+import { useModifyCollection, useRemoveCollection } from "@/lib/query-hooks";
 import { Collections } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TabsContent } from "@radix-ui/react-tabs";
@@ -27,6 +27,7 @@ export default function Group(props: Collections) {
   
   const toastIdRef = useRef<string | number | undefined>();
   const { mutate: modifyCollection, isError, isSuccess, isPending } = useModifyCollection();
+  const { mutate: deleteCollection, isError: isDeleteError, isSuccess: isDeleteSuccess, isPending: isDeletePending } = useRemoveCollection();
   const startAtFormatted = formatDate(startAt);
 
   const methods = useForm<BoxesFormValues>({
@@ -36,6 +37,18 @@ export default function Group(props: Collections) {
 
   const onSubmit = (data:BoxesFormValues["boxes"]): any => {
     modifyCollection({collection: {...props, boxes: data}});
+  }
+
+  const handlePrint = () => {
+    deleteCollection({id: props._id || ""});
+  }
+
+  const handleDone = () => {
+    modifyCollection({ collection: { ...props, status: "done"}})
+  }
+
+  const handleDelete = () => {
+
   }
 
   const { getValues, reset, formState: { isDirty, isSubmitting } } = methods;
@@ -82,18 +95,9 @@ export default function Group(props: Collections) {
           <div className="mx-auto w-full max-w-screen-xl flex-1 flex items-center justify-between">
             <h2 className="text-lg font-semibold text-dark/60"> {startAtFormatted} </h2>
             <div className="flex space-x-8">
-              <button className="action-button">
-                <Printer className="size-6" />
-                Print
-              </button>
-              <button className="action-button">
-                <CheckCircle2 className="size-6" />
-                Done
-              </button>
-              <button className="action-button">
-                <CircleX className="size-6" />
-                Delete
-              </button>
+              <ActionButton icon={Printer} text="Print" handleClick={() => console.log("print")}/>
+              <ActionButton icon={CheckCircle2} text="Done" handleClick={() => modifyCollection({ collection: { ...props, status: "done"}})}/>
+              <ActionButton icon={CircleX} text="Delete" handleClick={() => deleteCollection({id: props._id || ""})}/>
             </div>
           </div>
         </div>
@@ -119,5 +123,14 @@ function CollectionInfo(props: { icon: LucideIcon, digit: number}) {
       <props.icon className="size-6 text-dark/60" />
       <div className="text-lg text-dark/60 font-semibold">{props.digit}</div>
     </div>
+  )
+}
+
+function ActionButton(props: { icon: LucideIcon, text: string, handleClick: () => any}) {
+  return (
+    <button className="action-button" onClick={props.handleClick}>
+      <props.icon className="size-6" />
+      {props.text}
+    </button>
   )
 }
