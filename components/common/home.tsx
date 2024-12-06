@@ -7,7 +7,7 @@ export default function Home() {
     return (
         <Tab.Content value="home" className="tab-content flex-col">
             <div className="mx-auto w-full max-w-screen-xl flex items-start justify-between py-9">
-                <h1 className="text-3xl capitalize font-extrabold text-dark/60">Collections</h1>
+                <h1 className="text-3xl capitalize font-extrabold text-dark/60">COLLECTIONS</h1>
             </div>
             <div className="mx-auto w-full max-w-screen-xl flex-1"></div>
         </Tab.Content>
