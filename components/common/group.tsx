@@ -36,23 +36,12 @@ export default function Group(props: Collections) {
   });
 
   const onSubmit = (data:BoxesFormValues["boxes"]): any => {
-    modifyCollection({collection: {...props, boxes: data}});
+    modifyCollection({...props, boxes: data});
   }
 
-  const handlePrint = () => {
-    deleteCollection({id: props._id || ""});
-  }
-
-  const handleDone = () => {
-    modifyCollection({ collection: { ...props, status: "done"}})
-  }
-
-  const handleDelete = () => {
-
-  }
-
-  const { getValues, reset, formState: { isDirty, isSubmitting } } = methods;
+  const { getValues, reset, formState: { isDirty } } = methods;
   const debouncedSubmit = debounce(() => onSubmit(getValues("boxes")), 3000);
+  const disabled = isDeletePending || isPending
 
   useEffect(() => {
     if (isDirty) debouncedSubmit();
@@ -70,6 +59,18 @@ export default function Group(props: Collections) {
     }
   }, [isSuccess, isPending]);
 
+  useEffect(() => {
+    if (isDeletePending) { 
+      toastIdRef.current = toast.loading("Deleting Collection...");
+    }
+
+    if (isDeleteSuccess) {
+      if (toastIdRef.current) toast.dismiss(toastIdRef.current);
+      toast.success("Collection Deleted Successfully");
+      toastIdRef.current = undefined; 
+    }
+  }, [isDeleteSuccess, isDeletePending]);
+
   useEffect(()=> {
     reset({ boxes: boxes || [] });
   }, [boxes]);
@@ -78,26 +79,26 @@ export default function Group(props: Collections) {
       <TabsContent  value={label} className="tab-content">
         <div className="w-full flex-1 bg-secondary p-5 flex flex-col justify-between space-y-6">
           <div className="mx-auto w-full max-w-screen-xl flex-1 flex items-center justify-between">
-            <h1 className="text-3xl capitalize font-extrabold text-dark/60">Group {label}</h1>
+            <h1 className="text-3xl capitalize font-extrabold text-dark/60">GROUP {label}</h1>
             <div className="flex space-x-8">
-              <CollectionInfo icon={Package} digit={100} />
-              <CollectionInfo icon={PackageCheck} digit={20} />
-              <CollectionInfo icon={PackageX} digit={80} />
+              <CollectionInfo icon={Package} digit={boxTotal || 0} />
+              <CollectionInfo icon={PackageCheck} digit={boxDone || 0} />
+              <CollectionInfo icon={PackageX} digit={boxLeft || 0} />
             </div>
           </div>
           <FormProvider {...methods}>
             <form className="mx-auto grid auto-cols-[70px] grid-rows-[repeat(6,_70px)] grid-flow-col gap-4 place-content-center">
               {boxes.map((box, index) => (
-                <BoxField key={box._id} index={index} label={label} disabled={isPending || isSubmitting} />
+                <BoxField key={box._id} index={index} label={label} disabled={disabled} />
               ))}
             </form>
           </FormProvider>
           <div className="mx-auto w-full max-w-screen-xl flex-1 flex items-center justify-between">
             <h2 className="text-lg font-semibold text-dark/60"> {startAtFormatted} </h2>
             <div className="flex space-x-8">
-              <ActionButton icon={Printer} text="Print" handleClick={() => console.log("print")}/>
-              <ActionButton icon={CheckCircle2} text="Done" handleClick={() => modifyCollection({ collection: { ...props, status: "done"}})}/>
-              <ActionButton icon={CircleX} text="Delete" handleClick={() => deleteCollection({id: props._id || ""})}/>
+              <ActionButton icon={Printer} text="Print" handleClick={() => console.log("print")} disabled={disabled}/>
+              <ActionButton icon={CheckCircle2} text="Done" handleClick={() => modifyCollection({ ...props, status: "done"})} disabled={disabled}/>
+              <ActionButton icon={CircleX} text="Delete" handleClick={() => deleteCollection({id: props._id || ""})} disabled={disabled}/>
             </div>
           </div>
         </div>
@@ -126,9 +127,9 @@ function CollectionInfo(props: { icon: LucideIcon, digit: number}) {
   )
 }
 
-function ActionButton(props: { icon: LucideIcon, text: string, handleClick: () => any}) {
+function ActionButton(props: { icon: LucideIcon, text: string, handleClick: () => any, disabled?: boolean}) {
   return (
-    <button className="action-button" onClick={props.handleClick}>
+    <button className="action-button" onClick={props.handleClick} disabled>
       <props.icon className="size-6" />
       {props.text}
     </button>
