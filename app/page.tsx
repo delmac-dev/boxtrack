@@ -32,7 +32,7 @@ export default function BoxTrack() {
         {/* right panel */}
         <div className="relative isolate h-10 flex">
           <TabButton icon={LogOut} fnx={() => signOut({redirectTo: "/login"})} />
-          <Tab value="stats" onRight />
+          <Tab value="stats" onRight icon={HomeIcon} />
         </div>
       </Tabby.List>
 

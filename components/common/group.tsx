@@ -129,7 +129,7 @@ function CollectionInfo(props: { icon: LucideIcon, digit: number}) {
 
 function ActionButton(props: { icon: LucideIcon, text: string, handleClick: () => any, disabled?: boolean}) {
   return (
-    <button className="action-button" onClick={props.handleClick} disabled>
+    <button className="action-button" onClick={props.handleClick} disabled={props.disabled}>
       <props.icon className="size-6" />
       {props.text}
     </button>
