@@ -10,7 +10,7 @@ import Carton from "@/components/icons/carton";
 import { useGetActiveCollections } from "@/lib/query-hooks";
 import * as Dialog from "@radix-ui/react-dialog";
 import * as Tabby from "@radix-ui/react-tabs";
-import { HomeIcon, LogOut, Plus, X } from "lucide-react";
+import { ChartColumnBigIcon, HomeIcon, LogOut, Plus, X } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -32,7 +32,7 @@ export default function BoxTrack() {
         {/* right panel */}
         <div className="relative isolate h-10 flex">
           <TabButton icon={LogOut} fnx={() => signOut({redirectTo: "/login"})} />
-          <Tab value="stats" onRight icon={HomeIcon} />
+          <Tab value="stats" onRight icon={ChartColumnBigIcon} />
         </div>
       </Tabby.List>
 

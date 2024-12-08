@@ -6,7 +6,7 @@ import { HomeCells } from "./home-cells";
 
 // label startAt endAt boxTotal boxDone boxLeft status
 
-export const columns: ColumnDef<Collections>[] = [
+const columns: ColumnDef<Collections>[] = [
     {
         id: "date",
         header: "Date Started",
@@ -15,3 +15,5 @@ export const columns: ColumnDef<Collections>[] = [
         )
     }
 ]
+
+export default columns;
