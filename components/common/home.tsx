@@ -17,18 +17,20 @@ export default function Home() {
     const tableRows = table.getRowModel().rows;
     const hasRows = table.getRowModel().rows?.length;
 
+    console.log({collections});
+
     return (
         <Tab.Content value="home" className="tab-content flex-col">
             <div className="mx-auto w-full max-w-screen-xl flex items-start justify-between py-9">
                 <h1 className="text-3xl capitalize font-extrabold text-dark/60">COLLECTIONS</h1>
             </div>
-            <div className="mx-auto w-full max-w-screen-xl flex-1 bg-green-500">
+            <div className="mx-auto w-full max-w-screen-xl flex-1">
                 <table>
                     <thead>
                         {headerGroup.map(hg => (
                             <tr key={hg.id}>
                                 {hg.headers.map(h => (
-                                    <th>
+                                    <th key={h.id}>
                                         {h.isPlaceholder ? null : flexRender( h.column.columnDef.header, h.getContext())}
                                     </th>
                                 ))}
@@ -36,9 +38,9 @@ export default function Home() {
                         ))}
                     </thead>
                     <tbody>
-                        {tableRows.map((r) => (
+                        {tableRows.map(r => (
                             <tr key={r.id}>
-                                {r.getAllCells().map((cell) => (
+                                {r.getAllCells().map(cell => (
                                     <td key={cell.id}>
                                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                     </td>

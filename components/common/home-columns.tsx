@@ -31,7 +31,7 @@ const columns: ColumnDef<Collections>[] = [
         header: "Boxes Done",
     },
     {
-        id: "boxTotal",
+        id: "boxLeft",
         header: "Boxes Left",
     },
     {

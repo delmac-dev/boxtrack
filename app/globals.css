@@ -70,7 +70,7 @@ body {
   }
 
   table {
-    @apply w-full caption-bottom text-sm
+    @apply w-full caption-bottom text-sm border-collapse
   }
 
   thead {
@@ -82,14 +82,14 @@ body {
   }
 
   th {
-    @apply h-10 px-2 text-left align-middle font-medium text-dark [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]
+    @apply h-10 px-2 text-left align-middle font-medium text-dark
   }
 
   td {
-    @apply p-2 align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]
+    @apply p-2 align-middle
   }
 
   tr {
-    @apply border-b transition-colors hover:bg-secondary/50 data-[state=selected]:bg-secondary
+    @apply border-b transition-colors hover:bg-secondary/50
   }
 }
