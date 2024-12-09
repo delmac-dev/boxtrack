@@ -15,27 +15,27 @@ const columns: ColumnDef<Collections>[] = [
     //     )
     // },
     {
-        id: "startAt",
+        accessorKey: "startAt",
         header: "Date Started",
     },
     {
-        id: "label",
+        accessorKey: "label",
         header: "Group",
     },
     {
-        id: "boxTotal",
+        accessorKey: "boxTotal",
         header: "Total Boxes",
     },
     {
-        id: "boxDone",
+        accessorKey: "boxDone",
         header: "Boxes Done",
     },
     {
-        id: "boxLeft",
+        accessorKey: "boxLeft",
         header: "Boxes Left",
     },
     {
-        id: "status",
+        accessorKey: "status",
         header: "Status",
     },
     {
