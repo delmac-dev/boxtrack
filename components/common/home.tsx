@@ -24,7 +24,7 @@ export default function Home() {
             <div className="mx-auto w-full max-w-screen-xl flex items-start justify-between py-9">
                 <h1 className="text-3xl capitalize font-extrabold text-dark/60">COLLECTIONS</h1>
             </div>
-            <div className="mx-auto w-full max-w-screen-xl flex-1">
+            <div className="overflow-hidden mx-auto w-full rounded-md max-w-screen-xl bg-tertiary/10 p-5">
                 <table>
                     <thead>
                         {headerGroup.map(hg => (
