@@ -7,20 +7,21 @@ import Stats from "@/components/common/stats";
 import Tab from "@/components/common/tab";
 import TabButton from "@/components/common/tab-button";
 import Carton from "@/components/icons/carton";
+import { useTabContext } from "@/lib/custom-hooks";
 import { useGetActiveCollections } from "@/lib/query-hooks";
 import * as Dialog from "@radix-ui/react-dialog";
 import * as Tabby from "@radix-ui/react-tabs";
 import { ChartColumnBigIcon, HomeIcon, LogOut, Plus, X } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { useState } from "react";
-import { toast } from "sonner";
 
 export default function BoxTrack() {
   const { data: tabs, isLoading, isError } = useGetActiveCollections();
   const [ open, setOpen ] = useState(false);
+  const { activeTab, setActiveTab} = useTabContext();
 
   return (
-    <Tabby.Tabs defaultValue="home" className="w-full min-h-screen flex flex-col">
+    <Tabby.Tabs value={activeTab} onValueChange={setActiveTab} className="w-full min-h-screen flex flex-col">
       <Tabby.List className="w-full h-12 flex px-2 justify-between bg-primary items-end focus:outline-none">
         {/* left panel */}
         <div className="relative isolate h-10 flex">

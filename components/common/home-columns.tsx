@@ -4,6 +4,7 @@ import { Collections } from "@/lib/types";
 import { ColumnDef } from "@tanstack/react-table";
 import { formatDate } from "@/lib/utils";
 import { CalendarClockIcon, CheckCircle2, CircleX, LucideIcon, Printer } from "lucide-react";
+import { useTabContext } from "@/lib/custom-hooks";
 
 // label startAt endAt boxTotal boxDone boxLeft status
 
@@ -29,11 +30,15 @@ const columns: ColumnDef<Collections>[] = [
     {
         accessorKey: "label",
         header: "Collection",
-        cell: ({row}) => (
-            <div className="font-medium">
-                Group {row.getValue("label")}
-            </div>
-        )
+        cell: ({row: {original}}) => {
+            const {setActiveTab} = useTabContext();
+            const label = original.label;
+
+            return (
+                <button className="font-medium" onClick={() => setActiveTab(label)}>
+                    Group {label}
+                </button>
+        )}
     },
     {
         accessorKey: "status",
@@ -67,7 +72,7 @@ const columns: ColumnDef<Collections>[] = [
 ]
 
 const ActionButton = (props: {action: () => any, icon: LucideIcon, title: string}) => (
-    <button className="px-3 py-2 rounded-full bg-tertiary text-primary font-medium text-xs flex-center space-x-1" onClick={props.action}>
+    <button className="px-2.5 py-1.5 rounded-full bg-tertiary text-primary font-medium text-xs flex-center space-x-1" onClick={props.action}>
         <props.icon className="size-4"/>
         <span>{props.title}</span>
     </button>

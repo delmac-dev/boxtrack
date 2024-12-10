@@ -17,8 +17,6 @@ export default function Home() {
     const tableRows = table.getRowModel().rows;
     const hasRows = table.getRowModel().rows?.length;
 
-    console.log({collections});
-
     return (
         <Tab.Content value="home" className="tab-content flex-col">
             <div className="mx-auto w-full max-w-screen-xl flex items-start justify-between py-9">
