@@ -28,7 +28,7 @@ export default function Group(props: Collections) {
   const toastIdRef = useRef<string | number | undefined>();
   const { mutate: modifyCollection, isError, isSuccess, isPending } = useModifyCollection();
   const { mutate: deleteCollection, isError: isDeleteError, isSuccess: isDeleteSuccess, isPending: isDeletePending } = useRemoveCollection();
-  const startAtFormatted = formatDate(startAt);
+  const { day, date} = formatDate(startAt);
 
   const methods = useForm<BoxesFormValues>({
     defaultValues: { boxes: boxes || [] },
@@ -94,7 +94,7 @@ export default function Group(props: Collections) {
             </form>
           </FormProvider>
           <div className="mx-auto w-full max-w-screen-xl flex-1 flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-dark/60"> {startAtFormatted} </h2>
+            <h2 className="text-lg font-semibold text-dark/60"> {day}, {date} </h2>
             <div className="flex space-x-8">
               <ActionButton icon={Printer} text="Print" handleClick={() => console.log("print")} disabled={disabled}/>
               <ActionButton icon={CheckCircle2} text="Done" handleClick={() => modifyCollection({ ...props, status: "done"})} disabled={disabled}/>

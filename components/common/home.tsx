@@ -22,9 +22,9 @@ export default function Home() {
     return (
         <Tab.Content value="home" className="tab-content flex-col">
             <div className="mx-auto w-full max-w-screen-xl flex items-start justify-between py-9">
-                <h1 className="text-3xl capitalize font-extrabold text-dark/60">COLLECTIONS</h1>
+                <h1 className="text-3xl capitalize font-extrabold text-dark/60 tracking-tight">COLLECTIONS</h1>
             </div>
-            <div className="overflow-hidden mx-auto w-full rounded-md max-w-screen-xl bg-tertiary/10 p-5">
+            <div className="overflow-hidden mx-auto w-full rounded-2xl max-w-screen-xl bg-tertiary/5 p-3">
                 <table>
                     <thead>
                         {headerGroup.map(hg => (
