@@ -34,7 +34,8 @@ export const modifyCollection = async (props: Collections): Promise<Collections>
     if(!props._id) throw new Error("Record Dont Exit");
     const boxDone = props.boxes.reduce((count, {status}) => status ? count + 1 : count, 0);
     const boxLeft = props.boxTotal - boxDone;
-    const modifiedCollection: Collections = { ...props, boxLeft, boxDone, status: !boxLeft ? "done" : "active" }
+    const newStatus = !boxLeft ? "done" : "active";
+    const modifiedCollection: Collections = { ...props, boxLeft, boxDone, status: props.status === "done" ? props.status : newStatus }
 
     await Collection.findByIdAndUpdate(props._id, modifiedCollection);
 
