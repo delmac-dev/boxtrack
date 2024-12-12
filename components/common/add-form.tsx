@@ -11,7 +11,7 @@ const FormSchema = z.object({
 
 export type FormSchemaProp = z.infer<typeof FormSchema>;
 
-export default function AddForm(props:{callback: ()=>void}) {
+export default function AddForm(props: { callback: () => void }) {
     const { callback } = props;
     const { mutate: addCollection, isError, isSuccess, isPending } = useAddCollection();
 
@@ -22,10 +22,10 @@ export default function AddForm(props:{callback: ()=>void}) {
         }
     });
 
-    const {handleSubmit, formState: { isDirty, isSubmitting }, register} = form;
+    const { handleSubmit, formState: { isDirty, isSubmitting }, register } = form;
 
     function onSubmit(data: FormSchemaProp) {
-        addCollection({ collection: data});
+        addCollection({ collection: data });
     };
 
     useEffect(() => {
@@ -45,7 +45,7 @@ export default function AddForm(props:{callback: ()=>void}) {
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
             <input {...register("letter")} placeholder="box letter" className="block input-field uppercase" autoComplete="off" />
-            <button disabled={!isDirty || isSubmitting } className="button disabled:cursor-not-allowed">
+            <button disabled={!isDirty || isSubmitting} className="button disabled:cursor-not-allowed">
                 Add
             </button>
         </form>

@@ -5,6 +5,9 @@ import { ColumnDef } from "@tanstack/react-table";
 import { formatDate } from "@/lib/utils";
 import { CalendarClockIcon, CheckCircle2, CircleX, LucideIcon, Printer } from "lucide-react";
 import { useTabContext } from "@/lib/custom-hooks";
+import { useRemoveCollection } from "@/lib/query-hooks";
+import { useEffect, useRef } from "react";
+import { toast } from "sonner";
 
 // label startAt endAt boxTotal boxDone boxLeft status
 
@@ -31,13 +34,12 @@ const columns: ColumnDef<Collections>[] = [
         accessorKey: "label",
         header: "Collection",
         cell: ({row: {original}}) => {
-            const {setActiveTab} = useTabContext();
             const label = original.label;
 
             return (
-                <button className="font-medium" onClick={() => setActiveTab(label)}>
+                <p className="font-medium">
                     Group {label}
-                </button>
+                </p>
         )}
     },
     {
@@ -62,17 +64,34 @@ const columns: ColumnDef<Collections>[] = [
     },
     {
         id: "action",
-        cell: () => (
-            <div className="flex-center justify-start space-x-2">
-                <ActionButton title="Print" icon={Printer} action={()=> console.log("print")} />
-                <ActionButton title="Delete" icon={CircleX} action={()=> console.log("delete")} />
-            </div>
-        )
+        cell: ({row: { original }}) => {
+            const { mutate: deleteCollection, isError, isSuccess, isPending } = useRemoveCollection();
+            const toastIdRef = useRef<string | number | undefined>();
+
+            useEffect(() => {
+                if (isPending) { 
+                  toastIdRef.current = toast.loading("Deleting Collection...");
+                }
+            
+                if (isSuccess) {
+                  if (toastIdRef.current) toast.dismiss(toastIdRef.current);
+                  toast.success("Collection Deleted Successfully");
+                  toastIdRef.current = undefined;
+                }
+            }, [isSuccess, isPending]);
+
+            return (
+                <div className="flex-center justify-start space-x-2">
+                    <ActionButton title="Print" icon={Printer} fnx={()=> console.log("print")} />
+                    <ActionButton title="Delete" icon={CircleX} fnx={()=> deleteCollection({id: original._id || ""})} />
+                </div>
+            )
+        }
     },
 ]
 
-const ActionButton = (props: {action: () => any, icon: LucideIcon, title: string}) => (
-    <button className="px-2.5 py-1.5 rounded-full bg-tertiary text-primary font-medium text-xs flex-center space-x-1" onClick={props.action}>
+const ActionButton = (props: {fnx: () => any, icon: LucideIcon, title: string}) => (
+    <button className="px-2.5 py-1.5 rounded-full bg-tertiary text-primary font-medium text-xs flex-center space-x-1" onClick={props.fnx}>
         <props.icon className="size-4"/>
         <span>{props.title}</span>
     </button>

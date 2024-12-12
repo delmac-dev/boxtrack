@@ -13,15 +13,7 @@ export const getActiveCollections = async (): Promise<Collections[]> => connecti
     return await Collection.find({ status: "active" });
 });
 
-export const getStats = async (): Promise<Stats[]> => connectionProvider(async () => {
-    return await Stat.find()
-});
-
-const handleStats = async () => {
-
-}
-
-export const addCollection = async ({collection}:{ collection: FormSchemaProp}): Promise<string[]> => connectionProvider(async () => {
+export const addCollection = async ({collection}:{ collection: FormSchemaProp}): Promise<Collections> => connectionProvider(async () => {
     const { letter } = collection;
     const newCollection:Collections = {
         label: letter,
@@ -33,23 +25,20 @@ export const addCollection = async ({collection}:{ collection: FormSchemaProp}):
         boxDone: 0
     }
 
-    await Collection.create(newCollection);
+    const data = await Collection.create(newCollection);
 
-    return ["success"]
+    return data;
 });
 
-export const modifyCollection = async (props: Collections): Promise<string[]> => connectionProvider(async () => {
+export const modifyCollection = async (props: Collections): Promise<Collections> => connectionProvider(async () => {
     if(!props._id) throw new Error("Record Dont Exit");
-    let modifiedCollection: Collections = {
-        ...props,
-        boxLeft: 0, // minus 100 - boxes done
-        boxDone: 0, // number of boxes done
-        status: "active" // check if box done = box total
-    }
+    const boxDone = props.boxes.reduce((count, {status}) => status ? count + 1 : count, 0);
+    const boxLeft = props.boxTotal - boxDone;
+    const modifiedCollection: Collections = { ...props, boxLeft, boxDone, status: !boxLeft ? "done" : "active" }
 
     await Collection.findByIdAndUpdate(props._id, modifiedCollection);
 
-    return ["success"];
+    return modifiedCollection;
 });
 
 export const removeCollection = async ({id}:{id: string}): Promise<string[]> => connectionProvider(async () => {

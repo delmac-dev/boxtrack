@@ -9,6 +9,7 @@ import debounce from "lodash.debounce";
 import { formatDate } from "@/lib/utils";
 import { toast } from "sonner";
 import { CheckCircle2, CircleX, LucideIcon, Package, PackageCheck, PackageX, Printer } from "lucide-react";
+import { useTabContext } from "@/lib/custom-hooks";
 
 const BoxSchema = z.object({
   _id: z.string(),
@@ -26,6 +27,7 @@ export default function Group(props: Collections) {
   const { label, boxes, boxDone, boxLeft, boxTotal, startAt, endAt, status } = props;
   
   const toastIdRef = useRef<string | number | undefined>();
+  const { setActiveTab } = useTabContext();
   const { mutate: modifyCollection, isError, isSuccess, isPending } = useModifyCollection();
   const { mutate: deleteCollection, isError: isDeleteError, isSuccess: isDeleteSuccess, isPending: isDeletePending } = useRemoveCollection();
   const { day, date} = formatDate(startAt);
@@ -41,7 +43,7 @@ export default function Group(props: Collections) {
 
   const { getValues, reset, formState: { isDirty } } = methods;
   const debouncedSubmit = debounce(() => onSubmit(getValues("boxes")), 3000);
-  const disabled = isDeletePending || isPending
+  const disabled = isDeletePending || isPending || status === "done";
 
   useEffect(() => {
     if (isDirty) debouncedSubmit();
@@ -68,6 +70,7 @@ export default function Group(props: Collections) {
       if (toastIdRef.current) toast.dismiss(toastIdRef.current);
       toast.success("Collection Deleted Successfully");
       toastIdRef.current = undefined; 
+      setActiveTab("home");
     }
   }, [isDeleteSuccess, isDeletePending]);
 

@@ -27,9 +27,9 @@ export interface Collections {
     startAt: Date;
     endAt?: Date;
     status: string;
-    boxTotal?: number;
-    boxDone?: number;
-    boxLeft?: number;
+    boxTotal: number;
+    boxDone: number;
+    boxLeft: number;
     boxes: Box[];
     createdAt?: Date;
     updatedAt?: Date;
