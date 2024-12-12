@@ -1,8 +1,8 @@
 "use server";
 
-import { Collection, Stat } from "@/models";
+import { Collection } from "@/models";
 import { connectionProvider, createBoxes } from "./utils";
-import { Collections, Stats } from "./types";
+import { Collections } from "./types";
 import { FormSchemaProp } from "@/components/common/add-form";
 
 export const getCollections = async (): Promise<Collections[]> =>  connectionProvider(async () => {
