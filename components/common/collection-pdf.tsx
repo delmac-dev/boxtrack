@@ -137,9 +137,6 @@ const CollectionPDF = (collection: Collections) => {
     const { day, date} = formatDate(startAt);
     const { day: endDay, date: endDate } = formatDate(endAt);
 
-    console.log({endAt});
-    
-
     return (
         <Document>
             <Page style={styles.page} orientation="landscape">
