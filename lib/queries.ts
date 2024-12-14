@@ -35,7 +35,9 @@ export const modifyCollection = async (props: Collections): Promise<Collections>
     const boxDone = props.boxes.reduce((count, {status}) => status ? count + 1 : count, 0);
     const boxLeft = props.boxTotal - boxDone;
     const newStatus = !boxLeft ? "done" : "active";
-    const modifiedCollection: Collections = { ...props, boxLeft, boxDone, status: props.status === "done" ? props.status : newStatus }
+    const status = props.status === "done" ? props.status : newStatus;
+    const endAt = status === "done" ? new Date() : undefined;
+    const modifiedCollection: Collections = { ...props, boxLeft, boxDone, status, endAt }
 
     await Collection.findByIdAndUpdate(props._id, modifiedCollection);
 

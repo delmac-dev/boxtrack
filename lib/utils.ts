@@ -3,6 +3,7 @@ import { twMerge } from "tailwind-merge"
 import connectToDB from "./db";
 import { Box } from "./types";
 import { format } from 'date-fns';
+import { pdf } from '@react-pdf/renderer';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -35,10 +36,26 @@ export function createBoxes(letter: string, total: number): Box[] {
   return boxes;
 }
 
-export function formatDate(dateInput: Date): { day: string; date: string } {
+export function formatDate(dateInput: Date | undefined): { day: string | null; date: string | null } {
   
+  if(!dateInput) return { day: null, date: null}
+
   const day = format(dateInput, 'EEEE');
   const formattedDate = format(dateInput, 'do MMM. yyyy');
 
   return { day, date: formattedDate };
+}
+
+export async function handlePrint(doc: React.ReactElement, title: string) {
+  const blob = await pdf(doc).toBlob();
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = `collection-${title}.pdf`;
+
+  document.body.appendChild(link);
+  link.click();
+
+  URL.revokeObjectURL(url);
+  document.body.removeChild(link);
 }

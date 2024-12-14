@@ -2,12 +2,13 @@
 
 import { Collections } from "@/lib/types";
 import { ColumnDef } from "@tanstack/react-table";
-import { formatDate } from "@/lib/utils";
+import { formatDate, handlePrint } from "@/lib/utils";
 import { CalendarClockIcon, CheckCircle2, CircleX, LucideIcon, Printer } from "lucide-react";
 import { useTabContext } from "@/lib/custom-hooks";
 import { useRemoveCollection } from "@/lib/query-hooks";
 import { useEffect, useRef } from "react";
 import { toast } from "sonner";
+import CollectionPDF from "./collection-pdf";
 
 // label startAt endAt boxTotal boxDone boxLeft status
 
@@ -82,7 +83,7 @@ const columns: ColumnDef<Collections>[] = [
 
             return (
                 <div className="flex-center justify-start space-x-2">
-                    <ActionButton title="Print" icon={Printer} fnx={()=> console.log("print")} />
+                    <ActionButton title="Print" icon={Printer} fnx={() => handlePrint(<CollectionPDF { ...original} />, original.label)} />
                     <ActionButton title="Delete" icon={CircleX} fnx={()=> deleteCollection({id: original._id || ""})} />
                 </div>
             )

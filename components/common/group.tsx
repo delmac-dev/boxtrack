@@ -6,10 +6,11 @@ import React, { useEffect, useRef } from "react";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
 import { z } from "zod";
 import debounce from "lodash.debounce";
-import { formatDate } from "@/lib/utils";
+import { formatDate, handlePrint } from "@/lib/utils";
 import { toast } from "sonner";
 import { CheckCircle2, CircleX, LucideIcon, Package, PackageCheck, PackageX, Printer } from "lucide-react";
 import { useTabContext } from "@/lib/custom-hooks";
+import CollectionPDF from "./collection-pdf";
 
 const BoxSchema = z.object({
   _id: z.string(),
@@ -99,7 +100,7 @@ export default function Group(props: Collections) {
           <div className="mx-auto w-full max-w-screen-xl flex-1 flex items-center justify-between">
             <h2 className="text-lg font-semibold text-dark/60"> {day}, {date} </h2>
             <div className="flex space-x-8">
-              <ActionButton icon={Printer} text="Print" handleClick={() => console.log("print")} disabled={disabled}/>
+              <ActionButton icon={Printer} text="Print" handleClick={() => handlePrint(<CollectionPDF { ...props } />, label)} disabled={disabled}/>
               <ActionButton icon={CheckCircle2} text="Done" handleClick={() => modifyCollection({ ...props, status: "done"})} disabled={disabled}/>
               <ActionButton icon={CircleX} text="Delete" handleClick={() => deleteCollection({id: props._id || ""})} disabled={disabled}/>
             </div>
